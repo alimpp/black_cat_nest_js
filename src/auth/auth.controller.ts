@@ -23,7 +23,11 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  login(@Request() req) {
-    return req.user;
+  async login(@Request() req) {
+    const token = await this.authService.login(req.user.id);
+    return {
+      user_id: req.user.id,
+      token,
+    };
   }
 }
