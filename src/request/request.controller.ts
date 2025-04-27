@@ -1,6 +1,6 @@
 import { Controller, UseGuards, Req, Post, Get, Body, Delete, Param} from '@nestjs/common';
 import { RequestService } from './request.service';
-import {  CreateRequestDto } from './dto/createRequest.dto';
+import { CreateRequestDto } from './dto/createRequest.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth/jwt-auth.guard';
 
 @Controller('request')
