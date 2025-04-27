@@ -1,4 +1,4 @@
-import { Controller, UseGuards, Req, Post, Get, Body} from '@nestjs/common';
+import { Controller, UseGuards, Req, Post, Get, Body, Delete, Param} from '@nestjs/common';
 import { RequestService } from './request.service';
 import {  CreateRequestDto } from './dto/createRequest.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth/jwt-auth.guard';
@@ -17,5 +17,11 @@ export class RequestController {
     @Post('/send')
     async createRequest(@Req() req, @Body() body: CreateRequestDto) {
         return await this.requestService.createRequest(body);
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Delete(':id')
+    async removeRequest(@Req() req, @Param('id') id: number) {
+        return await this.requestService.removeRequest(id);
     }
 }
