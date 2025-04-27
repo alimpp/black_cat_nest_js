@@ -1,13 +1,13 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class RequestEntity {
+export class FriendsEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  from: number;
+  me: number;
 
   @Column()
-  to: number;
+  friend: number;
 }

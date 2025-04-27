@@ -6,9 +6,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { pgConfig } from 'dbConfig';
 import { AuthModule } from './auth/auth.module';
 import { RequestModule } from './request/request.module';
+import { FriendsModule } from './friends/friends.module';
 
 @Module({
-  imports: [UsersModule, AuthModule, TypeOrmModule.forRoot(pgConfig), RequestModule],
+  imports: [UsersModule, AuthModule, TypeOrmModule.forRoot(pgConfig), RequestModule, FriendsModule],
   controllers: [AppController],
   providers: [AppService],
 })
