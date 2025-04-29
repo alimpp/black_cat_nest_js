@@ -38,8 +38,9 @@ export class UsersController {
     return await this.usersService.createUser(body);
   }
 
-  @Patch(':id')
-  async update(@Param('id') id: number, @Body() body: UpdateUserDto) {
-    return await this.usersService.updateUser(id, body);
+  @UseGuards(JwtAuthGuard)
+  @Patch('/update')
+  async update(@Req() req, @Body() body: UpdateUserDto) {
+    return await this.usersService.updateUser(req.user.id, body);
   }
 }

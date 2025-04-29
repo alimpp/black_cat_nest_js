@@ -7,9 +7,10 @@ import { pgConfig } from 'dbConfig';
 import { AuthModule } from './auth/auth.module';
 import { RequestModule } from './request/request.module';
 import { FriendsModule } from './friends/friends.module';
+import { SkillModule } from './skill/skill.module';
 
 @Module({
-  imports: [UsersModule, AuthModule, TypeOrmModule.forRoot(pgConfig), RequestModule, FriendsModule],
+  imports: [UsersModule, AuthModule, TypeOrmModule.forRoot(pgConfig), RequestModule, FriendsModule, SkillModule],
   controllers: [AppController],
   providers: [AppService],
 })
