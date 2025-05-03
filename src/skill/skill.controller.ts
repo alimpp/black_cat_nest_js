@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards, Req, Post, Body } from '@nestjs/common';
+import { Controller, Get, UseGuards, Req, Post, Body, Param, Delete } from '@nestjs/common';
 import { SkillService } from './skill.service';
 import { CreateSkillDto } from './dto/create.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth/jwt-auth.guard';
@@ -17,5 +17,11 @@ export class SkillController {
     @Post('/add')
     async addSkill(@Req() req, @Body() body: CreateSkillDto) {
         return await this.skillService.addSkill({...body, userId: req.user.id});
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Delete(':id')
+    async removeSkill(@Req() req, @Param('id') id: number) {
+        return await this.skillService.removeSkill(id);
     }
 }

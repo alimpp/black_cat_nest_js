@@ -23,4 +23,8 @@ export class SkillService {
         const skill = this.skillRepository.create(body);
         return await this.skillRepository.save(skill);
     }
+
+    async removeSkill(id: number) {
+        return await this.skillRepository.delete(id);
+    }
 }
