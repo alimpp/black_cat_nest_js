@@ -12,7 +12,7 @@ export class RequestService {
     ) {}
 
     async getRequests(id: number) {
-        return await this.requestRepository.find({ where: { to: id } });
+        return await this.requestRepository.find({ where: { from: id } });
     }
 
     async createRequest(body: CreateRequestDto) {
