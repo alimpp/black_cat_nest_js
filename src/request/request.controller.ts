@@ -16,7 +16,11 @@ export class RequestController {
     @UseGuards(JwtAuthGuard)
     @Post('/send')
     async createRequest(@Req() req, @Body() body: CreateRequestDto) {
-        return await this.requestService.createRequest(body);
+        const result = {
+            from : req.user.id,
+            to: body.to
+        }
+        return await this.requestService.createRequest(result);
     }
 
     @UseGuards(JwtAuthGuard)
