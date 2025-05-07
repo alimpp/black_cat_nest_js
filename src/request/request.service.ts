@@ -2,8 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { RequestEntity } from 'src/entities/request.entity';
-import {  CreateRequestDto } from './dto/createRequest.dto';
 
+interface ICreateRequest {
+    to: number;
+    from: number;
+}
 @Injectable()
 export class RequestService {
     constructor(
@@ -15,12 +18,22 @@ export class RequestService {
         return await this.requestRepository.find({ where: { to: id } });
     }
 
-    async createRequest(body: CreateRequestDto) {
-        const request = this.requestRepository.create(body);
-        return await this.requestRepository.save(request);
-    }
-
-    async removeRequest(id: number) {
+    async createRequest(body: ICreateRequest) {
+        const existingRequest = await this.requestRepository.findOne({ where: { to: body.to, from: body.from } });
+        if (existingRequest) {
+            return {
+                message: 'Request Failed',
+                statusCode : 400
+            }
+        } else {
+            const request = this.requestRepository.create(body);
+            await this.requestRepository.save(request);
+            return {
+                message: 'Request Success',
+                statusCode : 200
+            }
+        }
+    }    async removeRequest(id: number) {
         return await this.requestRepository.delete(id);
     }
 }
