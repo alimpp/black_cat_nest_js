@@ -2,7 +2,7 @@ import { IsInt } from 'class-validator';
 
 export class CreateFriendDto {
   @IsInt()
-  me: number;
+  requestId: number;
 
   @IsInt()
   friend: number;
