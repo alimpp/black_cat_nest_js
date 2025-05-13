@@ -16,7 +16,12 @@ export class FriendsService {
   ) {}
 
   async getFriends(id: number) {
-    return await this.friendsRepository.find({ where: { me: id } });
+    return await this.friendsRepository.find({
+      where: [
+        {me: id},
+        {friend: id}
+      ]
+    });
   }
 
   async addFriend(body: ICreateFriendDto) {
