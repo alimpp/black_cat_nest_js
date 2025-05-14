@@ -4,8 +4,9 @@ import { Repository } from 'typeorm';
 import { FriendsEntity } from 'src/entities/friends.entity';
 
 interface ICreateFriendDto {
-  me: number;
-  friend: number;
+  friendRequestedBy: number,
+  from: number,
+  to: number,
 }
 
 @Injectable()
@@ -18,8 +19,8 @@ export class FriendsService {
   async getFriends(id: number) {
     return await this.friendsRepository.find({
       where: [
-        {me: id},
-        {friend: id}
+        {from: id},
+        {to: id}
       ]
     });
   }

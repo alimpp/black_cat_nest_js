@@ -6,8 +6,11 @@ export class FriendsEntity {
   id: number;
 
   @Column()
-  me: number;
+  friendRequestedBy: number;
 
   @Column()
-  friend: number;
+  from: number;
+
+  @Column()
+  to: number;
 }

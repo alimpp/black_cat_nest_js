@@ -28,7 +28,7 @@ export class RequestService {
       where: { to: body.to, from: body.from },
     });
     const existingFriend = await this.friendsRepository.findOne({
-      where: { friend: body.to},
+      where: { to: body.to},
     });
     if (existingRequest || existDuplicated) {
       return {

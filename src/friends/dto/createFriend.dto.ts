@@ -5,5 +5,5 @@ export class CreateFriendDto {
   requestId: number;
 
   @IsInt()
-  friend: number;
+  friendRequestedBy: number;
 }

@@ -30,8 +30,9 @@ export class FriendsController {
   @Post('/add')
   async addFriend(@Req() req, @Body() body: CreateFriendDto) {
     const result = {
-      me: req.user.id,
-      friend: body.friend,
+      friendRequestedBy: body.friendRequestedBy,
+      from: body.friendRequestedBy,
+      to: req.user.id,
     };
     await this.requestService.removeRequest(body.requestId);
     return await this.friendsService.addFriend(result);
