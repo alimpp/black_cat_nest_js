@@ -9,7 +9,7 @@ import { File } from 'src/entities/fileEntity';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
 export const pgConfig: PostgresConnectionOptions = {
-  url: 'postgresql://taskholder_owner:npg_o2QdYFlMzN6r@ep-shiny-union-a4xlmzr5-pooler.us-east-1.aws.neon.tech/taskholder?sslmode=require',
+  url: 'postgresql://tasks_owner:npg_0lAtiDCbwx9p@ep-purple-dream-a52au5di-pooler.us-east-2.aws.neon.tech/tasks?sslmode=require',
   type: 'postgres',
   port: 3306,
   entities: [UserEntity, RequestEntity, FriendsEntity, SkillEntity, NoteEntity, PostEntity, File],
