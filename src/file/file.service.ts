@@ -49,13 +49,11 @@ export class FileService {
     if (!file) {
       throw new Error('File not found');
     }
-
     try {
       unlinkSync(file.path);
     } catch (err) {
       console.error('Error deleting file:', err);
     }
-
     await this.fileRepository.delete(id);
   }
 
