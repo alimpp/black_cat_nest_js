@@ -5,6 +5,7 @@ import { SkillEntity } from 'src/entities/skills.entity';
 import { NoteEntity } from 'src/entities/note.entity';
 import { PostEntity } from 'src/entities/post.entity';
 import { File } from 'src/entities/fileEntity';
+import { ProjectsEntity } from 'src/entities/projects.entity';
 
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
@@ -12,7 +13,16 @@ export const pgConfig: PostgresConnectionOptions = {
   url: 'postgresql://tasks_owner:npg_0lAtiDCbwx9p@ep-purple-dream-a52au5di-pooler.us-east-2.aws.neon.tech/tasks?sslmode=require',
   type: 'postgres',
   port: 3306,
-  entities: [UserEntity, RequestEntity, FriendsEntity, SkillEntity, NoteEntity, PostEntity, File],
+  entities: [
+    UserEntity,
+    RequestEntity,
+    FriendsEntity,
+    SkillEntity,
+    NoteEntity,
+    PostEntity,
+    ProjectsEntity,
+    File,
+  ],
 
   // ** synchronize in development mode should be true and in production mode should be false ** //
   synchronize: true,

@@ -11,9 +11,10 @@ import { SkillModule } from './skill/skill.module';
 import { NoteModule } from './note/note.module';
 import { FileModule } from './file/file.module';
 import { PostsModule } from './posts/posts.module';
+import { ProjectsModule } from './projects/projects.module';
 
 @Module({
-  imports: [UsersModule, AuthModule, TypeOrmModule.forRoot(pgConfig), RequestModule, FriendsModule, SkillModule, NoteModule, FileModule, PostsModule],
+  imports: [UsersModule, AuthModule, TypeOrmModule.forRoot(pgConfig), RequestModule, FriendsModule, SkillModule, NoteModule, FileModule, PostsModule, ProjectsModule],
   controllers: [AppController],
   providers: [AppService],
 })
