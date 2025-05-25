@@ -11,8 +11,8 @@ import {
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth/jwt-auth.guard';
 import { CreateDto } from './dto/create.dto';
-import { UpdateDto } from './dto/updatedto';
 import { ProjectsService } from './projects.service';
+import { MembersService } from 'src/members/members.service';
 
 interface IProject {
   createdBy: number;
@@ -21,18 +21,56 @@ interface IProject {
   description: string;
 }
 
+interface Project {
+  id: string;
+  createdBy: number;
+  avatar: string;
+  name: string;
+  description: string;
+  createdAt: Date
+}
+
+interface IJoinedProjects {
+  id: string,
+  projectId: string,
+  memberId: number,
+  createdAt: string,
+  project: Project
+}
+
 @Controller('projects')
 export class ProjectsController {
-  constructor(private readonly projectsService: ProjectsService) {}
+  constructor(
+     private readonly projectsService: ProjectsService,
+     private readonly membersService: MembersService
+  ) {}
 
   @UseGuards(JwtAuthGuard)
-  @Get('/list')
+  @Get('/my-projects')
   async getProjects(@Req() req) {
     return await this.projectsService.getProjects(req.user.id);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Post('/add')
+  @Get('/joined')
+  async joinedProjects(@Req() req) {
+    const projects = await this.membersService.joinedProjects(req.user.id);
+    let result: IJoinedProjects[] = [];
+    for (let item of projects) {
+      const project = await this.projectsService.getProject(item.projectId);
+      if (project) {
+        const obj: IJoinedProjects = {
+          ...item,
+          createdAt: item.createdAt.toISOString(),
+          project,
+        }
+        result.push(obj)
+      }
+    }
+    return result;
+  }
+  
+  @UseGuards(JwtAuthGuard)  @Post('/add')
   async addProject(@Req() req, @Body() body: CreateDto) {
     return await this.projectsService.addProject({
       ...body,

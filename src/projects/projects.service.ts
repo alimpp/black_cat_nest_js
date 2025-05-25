@@ -21,6 +21,10 @@ export class ProjectsService {
     return await this.projectsRepository.find({ where: { createdBy: id } });
   }
 
+  async getProject(id: string) {
+    return await this.projectsRepository.findOne({ where: { id: id } });
+  }
+
   async addProject(body: IProject) {
     const project = this.projectsRepository.create(body);
     return await this.projectsRepository.save(project);

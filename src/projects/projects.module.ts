@@ -5,10 +5,13 @@ import { APP_PIPE } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProjectsEntity } from 'src/entities/projects.entity';
 
+import { MembersService } from 'src/members/members.service';
+import { MembersEntity } from 'src/entities/members.entity';
 @Module({
-  imports: [TypeOrmModule.forFeature([ProjectsEntity])],
+  imports: [TypeOrmModule.forFeature([ProjectsEntity, MembersEntity])],
   providers: [
     ProjectsService,
+    MembersService,
     {
       provide: APP_PIPE,
       useValue: new ValidationPipe({

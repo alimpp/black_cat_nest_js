@@ -4,8 +4,10 @@ import { FriendsEntity } from 'src/entities/friends.entity';
 import { SkillEntity } from 'src/entities/skills.entity';
 import { NoteEntity } from 'src/entities/note.entity';
 import { PostEntity } from 'src/entities/post.entity';
-import { File } from 'src/entities/fileEntity';
 import { ProjectsEntity } from 'src/entities/projects.entity';
+import { MembersEntity } from 'src/entities/members.entity';
+
+import { File } from 'src/entities/fileEntity';
 
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
@@ -21,6 +23,7 @@ export const pgConfig: PostgresConnectionOptions = {
     NoteEntity,
     PostEntity,
     ProjectsEntity,
+    MembersEntity,
     File,
   ],
 
