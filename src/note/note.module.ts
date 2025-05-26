@@ -5,9 +5,12 @@ import { APP_PIPE } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { NoteEntity } from 'src/entities/note.entity';
 
+import { UsersService } from 'src/users/users.service';
+import { UserEntity } from 'src/entities/user.entity';
+
 @Module({
-  imports: [TypeOrmModule.forFeature([NoteEntity])],
-  providers: [NoteService, 
+  imports: [TypeOrmModule.forFeature([NoteEntity, UserEntity])],
+  providers: [NoteService, UsersService,
     {
       provide: APP_PIPE,
       useValue: new ValidationPipe({

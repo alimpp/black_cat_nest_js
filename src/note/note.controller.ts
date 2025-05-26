@@ -2,20 +2,64 @@ import { Controller, Get, UseGuards, Req, Post, Body, Param, Delete, Patch } fro
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth/jwt-auth.guard';
 import { CreateNoteDto } from './dto/createNote.dto';
 import { NoteService } from './note.service';
+import { UsersService } from 'src/users/users.service';
+
+interface User {
+    id: number;
+    fristname: string;
+    lastname: string;
+    email: string;
+    avatarUrl: string;
+    bio: string;
+    password: string;
+}
+
+interface Notes {
+    id: number,
+    note: string,
+    authorId: number,
+    author: User,
+    created_at: Date
+}
+
+
 @Controller('note')
 export class NoteController {
-    constructor(private readonly noteService: NoteService) {}
+    constructor(
+        private readonly noteService: NoteService,
+        private readonly usersService: UsersService
+    ) {}
 
     @UseGuards(JwtAuthGuard)
     @Get('/all')
     async getAllNotes() {
-        return await this.noteService.getAllNotes();
+        const notes = await this.noteService.getAllNotes();
+        let result: Notes[] = [];
+        for (let key of notes) {
+            const author = await this.usersService.getUserById(key.authorId);
+            const obj: Notes = {
+                ...key,
+                author
+            };
+            result.push(obj);
+        }
+        return result;
     }
 
     @UseGuards(JwtAuthGuard)
     @Get('/list')
     async getNotes(@Req() req) {
-        return await this.noteService.getNotes(req.user.id);
+        const notes = await this.noteService.getNotes(req.user.id);
+        let result: any[] = [];
+        for (let key of notes) {
+            const author = await this.usersService.getUserById(key.authorId);
+            const obj: any = {
+                ...key,
+                author
+            };
+            result.push(obj);
+        }
+        return result;
     }
 
     @UseGuards(JwtAuthGuard)
