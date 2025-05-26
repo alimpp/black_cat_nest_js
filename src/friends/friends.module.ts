@@ -7,12 +7,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { FriendsEntity } from 'src/entities/friends.entity';
 import { RequestEntity } from 'src/entities/request.entity';
 
+import { UsersService } from 'src/users/users.service';
+import { UserEntity } from 'src/entities/user.entity';
+
 @Module({
-  imports: [TypeOrmModule.forFeature([FriendsEntity, RequestEntity])],
+  imports: [TypeOrmModule.forFeature([FriendsEntity, RequestEntity, UserEntity])],
   controllers: [FriendsController],
   providers: [
     FriendsService,
     RequestService,
+    UsersService,
     {
       provide: APP_PIPE,
       useValue: new ValidationPipe({

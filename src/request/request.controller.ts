@@ -6,7 +6,7 @@ import { UsersService } from 'src/users/users.service';
 
 interface User {
     id: number;
-    firstname: string;
+    fristname: string;
     lastname: string;
     email: string;
     avatarUrl: string;
@@ -31,11 +31,12 @@ export class RequestController {
     @Get('/list')
     async getRequests(@Req() req) {
         const requests = await this.requestService.getRequests(req.user.id);
-        let result : any = []
+        let result : Request[] = []
         for (let key of requests) {
-            const obj : any = {
+            const from = await this.usersService.getUserById(key.from)
+            const obj : Request = {
                 ...key,
-                from: await this.usersService.getUserById(key.from)
+                from, 
             }
             result.push(obj)
         }

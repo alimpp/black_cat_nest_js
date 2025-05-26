@@ -12,18 +12,48 @@ import { FriendsService } from './friends.service';
 import { CreateFriendDto } from './dto/createFriend.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth/jwt-auth.guard';
 import { RequestService } from 'src/request/request.service';
+import { UsersService } from 'src/users/users.service';
+
+interface User {
+  id: number;
+  fristname: string;
+  lastname: string;
+  email: string;
+  avatarUrl: string;
+  bio: string;
+  password: string;
+}
+
+interface Friend {
+  id: number,
+  friendRequestedBy: User,
+  from: User,
+  to: User,
+}
 
 @Controller('friends')
 export class FriendsController {
   constructor(
     private readonly friendsService: FriendsService,
     private readonly requestService: RequestService,
+    private readonly usersService: UsersService,
   ) {}
 
   @UseGuards(JwtAuthGuard)
   @Get('/list')
   async getFriends(@Req() req) {
-    return await this.friendsService.getFriends(req.user.id);
+    const friends = await this.friendsService.getFriends(req.user.id);
+    let result : Friend[] = []
+    for (let key of friends) {
+      const obj : Friend = {
+        ...key,
+        friendRequestedBy: await this.usersService.getUserById(key.friendRequestedBy),
+        from: await this.usersService.getUserById(key.from),
+        to: await this.usersService.getUserById(key.to)
+      }
+      result.push(obj)
+    }
+    return result
   }
 
   @UseGuards(JwtAuthGuard)
