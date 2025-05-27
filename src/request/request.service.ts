@@ -20,7 +20,7 @@ export class RequestService {
     return await this.requestRepository.find({ where: { to: id } });
   }
 
-  async createRequest(body: ICreateRequest) {
+  async createRequest(body: ICreateRequest) {    
     const existDuplicated = await this.requestRepository.findOne({
       where: { to: body.from, from: body.to },
     });
@@ -28,8 +28,8 @@ export class RequestService {
       where: { to: body.to, from: body.from },
     });
     const existingFriend = await this.friendsRepository.findOne({
-      where: { to: body.to},
-    });
+      where: { to: body.to, from: body.from},
+    });    
     if (existingRequest || existDuplicated) {
       return {
         message: 'Request duplicated',
