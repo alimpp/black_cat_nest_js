@@ -17,9 +17,14 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth/jwt-auth.guard';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Get('/all')
-  async getAllUsers() {
-    return await this.usersService.getAllUsers();
+  async getAllUsers(@Req() req) {
+    const allUsersList = await this.usersService.getAllUsers()
+    const filterCurrentUser = allUsersList.filter((user) => {
+      return user.id != req.user.id
+    })
+    return filterCurrentUser;
   }
 
   @UseGuards(JwtAuthGuard)

@@ -21,21 +21,24 @@ export class RequestService {
   }
 
   async createRequest(body: ICreateRequest) {    
-    const existDuplicated = await this.requestRepository.findOne({
-      where: { to: body.from, from: body.to },
+    const duplicateRequestFriend = await this.requestRepository.findOne({
+      where: [
+        { to: body.from, from: body.to },
+        { to: body.to, from: body.from }
+      ],
     });
-    const existingRequest = await this.requestRepository.findOne({
-      where: { to: body.to, from: body.from },
-    });
-    const existingFriend = await this.friendsRepository.findOne({
-      where: { to: body.to, from: body.from},
-    });    
-    if (existingRequest || existDuplicated) {
+    const duplicateFriend = await this.friendsRepository.findOne({
+      where: [
+        { to: body.from, from: body.to },
+        { to: body.to, from: body.from }
+      ],
+    });   
+    if (duplicateRequestFriend) {
       return {
-        message: 'Request duplicated',
+        message: 'Request Friend duplicated',
         statusCode: 400,
       };
-    } else if(existingFriend) {
+    } else if(duplicateFriend) {
       return {
         message: 'This user is your friend',
         statusCode: 400,
