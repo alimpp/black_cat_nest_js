@@ -16,6 +16,10 @@ export class RequestService {
     private readonly friendsRepository: Repository<FriendsEntity>,
   ) {}
 
+  async getAllRequests() {
+    return await this.requestRepository.find();
+  }
+
   async getRequests(id: number) {
     return await this.requestRepository.find({ where: { to: id } });
   }
