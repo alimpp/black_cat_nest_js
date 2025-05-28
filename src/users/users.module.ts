@@ -10,6 +10,7 @@ import { FriendsService } from 'src/friends/friends.service';
 
 import { RequestEntity } from 'src/entities/request.entity';
 import { FriendsEntity } from 'src/entities/friends.entity';
+
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity, RequestEntity, FriendsEntity])],
   controllers: [UsersController],
