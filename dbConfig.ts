@@ -6,7 +6,7 @@ import { NoteEntity } from 'src/entities/note.entity';
 import { PostEntity } from 'src/entities/post.entity';
 import { ProjectsEntity } from 'src/entities/projects.entity';
 import { MembersEntity } from 'src/entities/members.entity';
-
+import { PostsCommentEntity } from 'src/entities/postsComment.entity';
 import { File } from 'src/entities/fileEntity';
 
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
@@ -24,6 +24,7 @@ export const pgConfig: PostgresConnectionOptions = {
     PostEntity,
     ProjectsEntity,
     MembersEntity,
+    PostsCommentEntity,
     File,
   ],
 
