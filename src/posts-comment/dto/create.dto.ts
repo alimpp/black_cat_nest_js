@@ -5,6 +5,6 @@ export class CreateDto {
   postId: string;
 
   @IsString()
-  @Length(1, 30)
+  @Length(1, 1000)
   comment: string;
 }
