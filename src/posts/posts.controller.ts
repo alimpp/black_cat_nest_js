@@ -30,7 +30,6 @@ interface Posts {
 
 @Controller('posts')
 export class PostsController {
-    
     constructor(
         private readonly postsService: PostsService,
         private readonly usersService: UsersService,
