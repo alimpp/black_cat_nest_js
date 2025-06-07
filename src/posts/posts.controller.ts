@@ -24,11 +24,13 @@ interface Posts {
     created_at: Date,
     commentsCount: number,
     likesCount: number,
+    youLiked: boolean,
     author: User
 }
 
 @Controller('posts')
 export class PostsController {
+    
     constructor(
         private readonly postsService: PostsService,
         private readonly usersService: UsersService,
@@ -38,18 +40,22 @@ export class PostsController {
 
     @UseGuards(JwtAuthGuard)
     @Get('/all')
-    async getAllPosts() {
+    async getAllPosts(@Req() req) {
         const posts = await this.postsService.getAllPosts();
         let result: Posts[] = [];
         for (let key of posts) {
             const author = await this.usersService.getUserById(key.authorId);
             const comments = await this.postsCommentService.getComments(key.id)
             const likes = await this.likeService.getLikes(key.id)
+            const youLiked = likes.find((item) => {
+                return item.likedBy == req.user.id && item.postId == key.id
+            })
             const obj: Posts = {
                 ...key,
                 author,
                 commentsCount: comments.length,
-                likesCount: likes.length
+                likesCount: likes.length,
+                youLiked: youLiked ? true : false
             };
             result.push(obj);
         }
@@ -65,11 +71,15 @@ export class PostsController {
             const author = await this.usersService.getUserById(key.authorId);
             const comments = await this.postsCommentService.getComments(key.id)
             const likes = await this.likeService.getLikes(key.id)
+            const youLiked = likes.find((item) => {
+                return item.likedBy == req.user.id && item.postId == key.id
+            })
             const obj: Posts = {
                 ...key,
                 author,
                 commentsCount: comments.length,
-                likesCount: likes.length
+                likesCount: likes.length,
+                youLiked: youLiked ? true : false
             };
             result.push(obj);
         }
