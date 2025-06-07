@@ -3,6 +3,7 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth/jwt-auth.guard';
 import { CreatePostDto } from './dto/createPost.dto';
 import { PostsService } from './posts.service';
 import { UsersService } from 'src/users/users.service';
+import { PostsCommentService } from 'src/posts-comment/posts-comment.service';
 
 interface User {
     id: number;
@@ -20,7 +21,8 @@ interface Posts {
     imageId: string,
     title: string,
     description: string,
-    created_at: Date
+    created_at: Date,
+    commentsCount: number,
     author: User
 }
 
@@ -28,7 +30,8 @@ interface Posts {
 export class PostsController {
     constructor(
         private readonly postsService: PostsService,
-        private readonly usersService: UsersService
+        private readonly usersService: UsersService,
+        private readonly postsCommentService: PostsCommentService
     ) {}
 
     @UseGuards(JwtAuthGuard)
@@ -38,9 +41,11 @@ export class PostsController {
         let result: Posts[] = [];
         for (let key of posts) {
             const author = await this.usersService.getUserById(key.authorId);
+            const comments = await this.postsCommentService.getComments(key.id)
             const obj: Posts = {
                 ...key,
-                author
+                author,
+                commentsCount: comments.length
             };
             result.push(obj);
         }
@@ -54,9 +59,11 @@ export class PostsController {
         let result: Posts[] = [];
         for (let key of posts) {
             const author = await this.usersService.getUserById(key.authorId);
+            const comments = await this.postsCommentService.getComments(key.id)
             const obj: Posts = {
                 ...key,
-                author
+                author,
+                commentsCount: comments.length
             };
             result.push(obj);
         }
