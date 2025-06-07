@@ -4,7 +4,7 @@ import { CreatePostDto } from './dto/createPost.dto';
 import { PostsService } from './posts.service';
 import { UsersService } from 'src/users/users.service';
 import { PostsCommentService } from 'src/posts-comment/posts-comment.service';
-
+import { LikeService } from 'src/like/like.service'
 interface User {
     id: number;
     fristname: string;
@@ -23,6 +23,7 @@ interface Posts {
     description: string,
     created_at: Date,
     commentsCount: number,
+    likesCount: number,
     author: User
 }
 
@@ -31,7 +32,8 @@ export class PostsController {
     constructor(
         private readonly postsService: PostsService,
         private readonly usersService: UsersService,
-        private readonly postsCommentService: PostsCommentService
+        private readonly postsCommentService: PostsCommentService,
+        private readonly likeService: LikeService
     ) {}
 
     @UseGuards(JwtAuthGuard)
@@ -42,10 +44,12 @@ export class PostsController {
         for (let key of posts) {
             const author = await this.usersService.getUserById(key.authorId);
             const comments = await this.postsCommentService.getComments(key.id)
+            const likes = await this.likeService.getLikes(key.id)
             const obj: Posts = {
                 ...key,
                 author,
-                commentsCount: comments.length
+                commentsCount: comments.length,
+                likesCount: likes.length
             };
             result.push(obj);
         }
@@ -60,10 +64,12 @@ export class PostsController {
         for (let key of posts) {
             const author = await this.usersService.getUserById(key.authorId);
             const comments = await this.postsCommentService.getComments(key.id)
+            const likes = await this.likeService.getLikes(key.id)
             const obj: Posts = {
                 ...key,
                 author,
-                commentsCount: comments.length
+                commentsCount: comments.length,
+                likesCount: likes.length
             };
             result.push(obj);
         }

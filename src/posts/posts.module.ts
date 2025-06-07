@@ -11,10 +11,12 @@ import { UserEntity } from 'src/entities/user.entity';
 import { PostsCommentService } from 'src/posts-comment/posts-comment.service';
 import { PostsCommentEntity } from 'src/entities/postsComment.entity';
 
+import { LikeService } from 'src/like/like.service'
+import { LikesEntity } from 'src/entities/likes.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([PostEntity, UserEntity, PostsCommentEntity])],
-  providers: [PostsService, UsersService,PostsCommentService,
+  imports: [TypeOrmModule.forFeature([PostEntity, UserEntity, PostsCommentEntity, LikesEntity])],
+  providers: [PostsService, UsersService,PostsCommentService, LikeService,
     {
       provide: APP_PIPE,
       useValue: new ValidationPipe({

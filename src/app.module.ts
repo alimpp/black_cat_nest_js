@@ -14,9 +14,10 @@ import { PostsModule } from './posts/posts.module';
 import { ProjectsModule } from './projects/projects.module';
 import { MembersModule } from './members/members.module';
 import { PostsCommentModule } from './posts-comment/posts-comment.module';
+import { LikeModule } from './like/like.module';
 
 @Module({
-  imports: [UsersModule, AuthModule, TypeOrmModule.forRoot(pgConfig), RequestModule, FriendsModule, SkillModule, NoteModule, FileModule, PostsModule, ProjectsModule, MembersModule, PostsCommentModule],
+  imports: [UsersModule, AuthModule, TypeOrmModule.forRoot(pgConfig), RequestModule, FriendsModule, SkillModule, NoteModule, FileModule, PostsModule, ProjectsModule, MembersModule, PostsCommentModule, LikeModule],
   controllers: [AppController],
   providers: [AppService],
 })
