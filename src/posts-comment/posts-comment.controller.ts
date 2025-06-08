@@ -48,7 +48,12 @@ export class PostsCommentController {
     @UseGuards(JwtAuthGuard)
     @Post('/add')
     async addComment(@Req() req, @Body() body: CreateDto) {
-      return await this.postsCommentService.addComment({...body, commentFrom: req.user.id})
+      const response = await this.postsCommentService.addComment({...body, commentFrom: req.user.id})
+      const commentFrom = await this.usersService.getUserById(response.commentFrom) 
+      return {
+        ...response,
+        commentFrom: commentFrom
+      }
     }
 
     @UseGuards(JwtAuthGuard)
