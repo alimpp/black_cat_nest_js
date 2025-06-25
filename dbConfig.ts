@@ -13,7 +13,7 @@ import { File } from 'src/entities/fileEntity';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
 export const pgConfig: PostgresConnectionOptions = {
-  url: 'postgresql://tasks_owner:npg_0lAtiDCbwx9p@ep-purple-dream-a52au5di-pooler.us-east-2.aws.neon.tech/tasks?sslmode=require',
+  url: 'postgresql://tasks_DB_owner:npg_zNuOZejUwt73@ep-patient-forest-a8qhl3an-pooler.eastus2.azure.neon.tech/tasks_DB?sslmode=require&channel_binding=require',
   type: 'postgres',
   port: 3306,
   entities: [
